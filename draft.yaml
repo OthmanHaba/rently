@@ -1,0 +1,200 @@
+models:
+  UserRole:
+    id: id
+    role_name: string:255
+    description: text nullable
+  UsersRole:
+    user_id: id:foreign:users
+    role_id: id:foreign:user_roles
+  Category:
+    id: id
+    category_name: string:255
+    description: text nullable
+  Rentable:
+    id: id
+    owner_id: id:foreign:users
+    category_id: id:foreign:categories
+    title: string:255
+    description: text
+    # Add other attributes as needed
+  RentableType:
+    id: id
+    type_name: string:255
+    description: text nullable
+  RentableTypeAttribute:
+    id: id
+    type_id: id:foreign:rentable_types
+    attribute_name: string:255
+    attribute_description: text nullable
+    data_type: string:255
+  RentableItemAttribute:
+    rentable_id: id:foreign:rentable
+    type_attribute_id: id:foreign:rentable_type_attributes
+    attribute_value: string:255
+  Booking:
+    id: id
+    rentable_id: id:foreign:rentable
+    user_id: id:foreign:users
+  Review:
+    id: id
+    rentable_id: id:foreign:rentable
+    user_id: id:foreign:users
+    rating: integer
+    review_text: text
+    review_date: timestamp
+  Comment:
+    id: id
+    rentable_id: id:foreign:rentable
+    user_id: id:foreign:users
+    comment_text: text
+    comment_date: timestamp
+  CommentReaction:
+    id: id
+    comment_id: id:foreign:comments
+    user_id: id:foreign:users
+    reaction_type: enum:like,dislike
+    reaction_date: timestamp
+  FeatureFlag:
+    id: id
+    feature_name: string:255
+    is_active: boolean
+    rollout_date: timestamp
+    description: text nullable
+  DynamicProperty:
+    id: id
+    rentable_id: id:foreign:rentable
+    key: string:255
+    value: string:255
+  UserPreference:
+    id: id
+    user_id: id:foreign:users
+    key: string:255
+    value: string:255
+  Integration:
+    id: id
+    integration_name: string:255
+    integration_type: string:255
+    config_data: text
+    is_active: boolean
+  TransactionLog:
+    id: id
+    transaction_date: timestamp
+    user_id: id:foreign:users
+    operation_type: string:255
+    details: text nullable
+  Address:
+    id: id
+    rentable_id: id:foreign:rentable
+    street: string:255
+    city: string:255
+    state: string:255
+    zip_code: string:255
+    country: string:255
+  RentableStatus:
+    id: id
+    status_name: string:255
+    description: text nullable
+  Invoice:
+    id: id
+    booking_id: id:foreign:bookings
+    issue_date: timestamp
+    due_date: timestamp
+    total_amount: decimal:8,2
+    status: enum:pending,paid,overdue
+  MaintenanceAndRepair:
+    id: id
+    rentable_id: id:foreign:rentable
+    maintenance_date: timestamp
+    details: text nullable
+    cost: decimal:8,2
+  CancellationRefundPolicy:
+    id: id
+    policy_details: text
+    effective_date: timestamp
+  CustomerRating:
+    id: id
+    rated_user_id: id:foreign:users
+    rater_user_id: id:foreign:users
+    rating_score: integer
+    comment: text nullable
+    rating_date: timestamp
+  EventsAndAlert:
+    id: id
+    event_type: string:255
+    event_details: text
+    alert_date: timestamp
+    user_id: id:foreign:users
+  QualityAssuranceLog:
+    id: id
+    rentable_id: id:foreign:rentable
+    report_details: text
+    report_date: timestamp
+    action_taken: text nullable
+  OfferAndDiscount:
+    id: id
+    rentable_id: id:foreign:rentable
+    offer_details: text
+    start_date: timestamp
+    end_date: timestamp
+    discount_percentage: decimal:5,2
+  InsuranceReport:
+    id: id
+    rentable_id: id:foreign:rentable
+    insurance_provider: string:255
+    policy_number: string:255
+    coverage_details: text
+    claim_details: text
+    report_date: timestamp
+controllers:
+  UserRoleController:
+    resource: web
+  UsersRoleController:
+    resource: web
+  CategoryController:
+    resource: web
+  RentableController:
+    resource: web
+  RentableTypeController:
+    resource: web
+  RentableTypeAttributeController:
+    resource: web
+  RentableItemAttributeController:
+    resource: web
+  BookingController:
+    resource: web
+  ReviewController:
+    resource: web
+  CommentController:
+    resource: web
+  CommentReactionController:
+    resource: web
+  FeatureFlagController:
+    resource: web
+  DynamicPropertyController:
+    resource: web
+  UserPreferenceController:
+    resource: web
+  IntegrationController:
+    resource: web
+  TransactionLogController:
+    resource: web
+  AddressController:
+    resource: web
+  RentableStatusController:
+    resource: web
+  InvoiceController:
+    resource: web
+  MaintenanceAndRepairController:
+    resource: web
+  CancellationRefundPolicyController:
+    resource: web
+  CustomerRatingController:
+    resource: web
+  EventsAndAlertController:
+    resource: web
+  QualityAssuranceLogController:
+    resource: web
+  OfferAndDiscountController:
+    resource: web
+  InsuranceReportController:
+    resource: web
